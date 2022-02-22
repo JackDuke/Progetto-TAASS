@@ -19,17 +19,17 @@ export class ApiService {
     }),
   };
 
-  // Riferimento alla cartella api in htdocs in xampp --> URL per effettuare le chiamate al DB
-  PHP_API_SERVER = 'http://localhost/api';
+
+  baseUrl = 'http://localhost/api';
   // Riferimento al server node
-  NODE_API_SERVER = 'http://localhost:8648';
+  // NODE_API_SERVER = 'http://localhost:8648';
 
   constructor(private httpClient: HttpClient) {}
 
   login(email: string, password: string) {
     const postData = 'email=' + email + '&password=' + password;
     return this.httpClient
-      .post<User>(`${this.PHP_API_SERVER}/login.php`, postData, {
+      .post<User>(`${this.baseUrl}/login.php`, postData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -47,7 +47,7 @@ export class ApiService {
   logout(uniqueId: number) {
     const postData = 'unique_id=' + uniqueId;
     return this.httpClient
-      .post(`${this.PHP_API_SERVER}/logout.php`, postData, {
+      .post(`${this.baseUrl}/logout.php`, postData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -59,7 +59,7 @@ export class ApiService {
   getUsers(uniqueId: number) {
     const postData = 'unique_id=' + uniqueId;
     return this.httpClient
-      .post<User[]>(`${this.PHP_API_SERVER}/users.php`, postData, {
+      .post<User[]>(`${this.baseUrl}/users.php`, postData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -71,7 +71,7 @@ export class ApiService {
       );
   }
 
-  getUsersNode() {
+  /* getUsersNode() {
     return this.httpClient
       .get<User[]>(`${this.NODE_API_SERVER}`, {
         headers: {
@@ -83,12 +83,12 @@ export class ApiService {
           return users as User[];
         })
       );
-  }
+  } */
 
   getChat(uniqueId: number, incomingId: number) {
     const postData = 'unique_id=' + uniqueId + '&incoming_id=' + incomingId;
     return this.httpClient
-      .post<Message[]>(`${this.PHP_API_SERVER}/get-chat.php`, postData, {
+      .post<Message[]>(`${this.baseUrl}/get-chat.php`, postData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -103,7 +103,7 @@ export class ApiService {
   insertNewContact(uniqueId: number, fname: string, lname: string, email: string, password: string, img: string, status: string) {
     const postData = 'unique_id=' + uniqueId + '&fname=' + fname + '&lname=' + lname + '&email=' + email + '&password=' + password + '&img=' + img + '&status=' + status;
     return this.httpClient
-      .post<User>(`${this.PHP_API_SERVER}/insert-contact.php`, postData, {
+      .post<User>(`${this.baseUrl}/insert-contact.php`, postData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -118,7 +118,7 @@ export class ApiService {
   sendMessage(uniqueId: number, incomingId: number, msg: string) {
     const postData = 'unique_id=' + uniqueId + '&incoming_id=' + incomingId + '&message=' + msg;
     return this.httpClient
-      .post<Message>(`${this.PHP_API_SERVER}/insert-chat.php`, postData, {
+      .post<Message>(`${this.baseUrl}/insert-chat.php`, postData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -131,7 +131,7 @@ export class ApiService {
   }
 
   deleteMessage(msgId: number) {
-    return this.httpClient.delete(`${this.PHP_API_SERVER}/delete-message.php?msg_id=${msgId}`);
+    return this.httpClient.delete(`${this.baseUrl}/delete-message.php?msg_id=${msgId}`);
   }
 
 }
