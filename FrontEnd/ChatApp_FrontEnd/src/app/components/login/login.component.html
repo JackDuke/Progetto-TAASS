@@ -1,0 +1,42 @@
+<p>login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Live Chat App</title>
+  <link rel="stylesheet" href="login.component.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+</head>
+<body>
+  <div class="wrapper">
+    <section class="form login">
+      <header>Live Chat App</header>
+      <form id="loginForm" #loginForm="ngForm" name="loginForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" autocomplete="off">
+        <div class="error-text"></div>
+        <div class="field input">
+          <label>Email</label>
+          <input [(ngModel)]="this.user.email" #email="ngModel" type="email" name="email"  placeholder="Inserisci la tua email" required>
+        </div>
+        <div class="field input">
+          <label>Password</label>
+          <input [(ngModel)]="user.password" #password="ngModel" class="form-control pwd-control"
+          id="password-field" name="password" placeholder="Inserisci la tua password" required [type]="showPassword ? 'text' : 'password'">
+          <div>
+            <i alt="show" class="far fa-eye eye-show"
+            (click)="showPassword = !showPassword"
+            [class.hide]="showPassword"></i>
+            <i alt="hide" class="far fa-eye-slash eye-hide"
+            (click)="showPassword = !showPassword"
+            [class.hide]="!showPassword"></i>
+          </div>
+        </div>
+        <div class="field button">
+          <input type="submit" name="submit" value="Continue to Chat">
+        </div>
+      </form>
+    </section>
+  </div>
+</body>
+</html>

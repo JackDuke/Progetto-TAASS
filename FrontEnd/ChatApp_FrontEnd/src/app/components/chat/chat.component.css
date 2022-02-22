@@ -1,0 +1,22 @@
+/* body {
+  background-color: #41464b;
+} */
+.send {
+  cursor: pointer;
+}
+
+.lname {
+  font-weight: 600;
+}
+
+i {
+  cursor: pointer;
+}
+
+i.show-icon {
+  visibility: visible;
+}
+
+i.hide-icon {
+  visibility: hidden;
+}

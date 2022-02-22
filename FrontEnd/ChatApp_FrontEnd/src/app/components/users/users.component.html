@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Live Chat App</title>
+  <link rel="stylesheet" href="users.component.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+</head>
+<body>
+  <div class="wrapper">
+    <section class="users">
+      <header>
+        <div class="content">
+          <img src="./../../assets/images/{{this.user.img}}" alt="">
+          <div class="details">
+            <span>{{this.user.fname}}</span>
+            <p class="lname">{{this.user.lname}}</p>
+          </div>
+        </div>
+        <a (click)="newContact()" id="newChat" style="cursor: pointer;"><i class="fas fa-plus"></i></a>
+        <a (click)="logout()" class="logout" style="cursor: pointer;">Logout</a>
+      </header>
+
+      <div class="search">
+        <span class="title">Lista chat</span>
+      </div>
+      <div class="users-list">
+        <ul>
+          <li *ngFor="let user of this.users" style="list-style-type: none; text-decoration: none;">
+            <a (click)="goToChat(user)" style="text-decoration: none; cursor: pointer;">
+              <div class="content" (mouseover)='hoverChat = user' (mouseleave)='hoverChat = null'>
+                <img src="./../../assets/images/{{user.img}}" alt="">
+                <div class="details">
+                  <span>{{user.fname}} {{user.lname}}</span>
+                </div>
+                </div>
+              <div class="status-dot" [ngStyle]="{'color':user.status === 'Offline' ? 'grey' : 'green' }"><i class="fas fa-circle"></i></div>
+          </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
