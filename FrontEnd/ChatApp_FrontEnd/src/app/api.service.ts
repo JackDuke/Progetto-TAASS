@@ -3,33 +3,33 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from './model/user';
 import { map } from 'rxjs/operators';
 import { Message } from './model/message';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-      'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, PATCH, OPTIONS',
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      Authorization: 'authkey',
-      userid: '1',
-    }),
-  };
 
-
-  baseUrl = 'http://localhost/api';
-  // Riferimento al server node
-  // NODE_API_SERVER = 'http://localhost:8648';
+  baseUrl = 'http://localhost:8080/api/v1';
 
   constructor(private httpClient: HttpClient) {}
 
-  login(email: string, password: string) {
+  login(user: User): Observable<Object> {
+    return this.httpClient.post(`${this.baseUrl}/login`, user);
+  }
+
+  getUser(id: number): Observable<Object> {
+    return this.httpClient.get(`${this.baseUrl}/${id}`);
+  }
+
+  getUserList(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}/users`);
+  }
+
+  /* login(email: string, password: string): Observable<Object> {
     const postData = 'email=' + email + '&password=' + password;
     return this.httpClient
-      .post<User>(`${this.baseUrl}/login.php`, postData, {
+      .post(`${this.baseUrl}/login`, { data: email, password }, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
@@ -42,7 +42,7 @@ export class ApiService {
           return user;
         })
       );
-  }
+  } */
 
   logout(uniqueId: number) {
     const postData = 'unique_id=' + uniqueId;
@@ -70,20 +70,6 @@ export class ApiService {
         })
       );
   }
-
-  /* getUsersNode() {
-    return this.httpClient
-      .get<User[]>(`${this.NODE_API_SERVER}`, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-      })
-      .pipe(
-        map((users) => {
-          return users as User[];
-        })
-      );
-  } */
 
   getChat(uniqueId: number, incomingId: number) {
     const postData = 'unique_id=' + uniqueId + '&incoming_id=' + incomingId;

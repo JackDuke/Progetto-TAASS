@@ -14,4 +14,10 @@ public class ChatAppController {
     
     /* @Autowired
 	ChatAppRepository repository; */
+
+    /* @Autowired
+	UserRepository userRepository; */
+
+    /* @Autowired
+	MessageRepository messageRepository; */
 }

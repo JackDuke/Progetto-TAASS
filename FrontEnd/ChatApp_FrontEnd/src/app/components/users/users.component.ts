@@ -22,31 +22,31 @@ export class UsersComponent implements OnInit {
                }
 
   ngOnInit(): void {
-    this.apiService.getUsers(this.user.unique_id).subscribe(users => {
+    /* this.apiService.getUsers(this.user.unique_id).subscribe(users => {
         this.users = users as User[];
     });
 
-    this.checkUserList();
+    this.checkUserList(); */
   }
 
   newContact(): void {
-    this.router.navigate(['contacts'], {state: {user: this.user}});
+    /* this.router.navigate(['contacts'], {state: {user: this.user}}); */
   }
 
   checkUserList(): void {
-    setInterval(() => {
+    /* setInterval(() => {
       this.apiService.getUsers(this.user.unique_id).subscribe(users => {
         this.users = users as User[];
     });
-    }, 1000);
+    }, 1000); */
   }
 
   goToChat(userToChat: User) {
-    this.router.navigate(['chat'], {state: { example: userToChat, user: this.user}});
+    /* this.router.navigate(['chat'], {state: { example: userToChat, user: this.user}}); */
   }
 
   logout() {
-    this.apiService.logout(this.user.unique_id).subscribe();
-    this.router.navigate(['login']);
+    /* this.apiService.logout(this.user.unique_id).subscribe();
+    this.router.navigate(['login']); */
   }
 }

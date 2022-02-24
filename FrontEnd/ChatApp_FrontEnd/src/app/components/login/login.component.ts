@@ -11,18 +11,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+
   loginForm!: FormGroup;
   public showPassword: boolean | undefined;
-  user: User = {
-    user_id: 0,
-    unique_id: 0,
-    fname: '',
-    lname: '',
-    email: '',
-    password: '',
-    img: '',
-    status: '',
-  };
+  user: any;
 
   constructor(private apiService: ApiService,
     private router: Router) { }
@@ -31,10 +23,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.apiService.login(this.user.email, this.user.password).subscribe(user => {
+   /*  this.apiService.login(this.user).subscribe(user => {
       this.user = user;
       // Cambio component ma mi porto dietro lo user
       this.router.navigate(['/users'], {state: {user: this.user}});
-    });
+    }); */
+    this.apiService.login(this.user).subscribe((user) => this.user = user);
   }
 }
