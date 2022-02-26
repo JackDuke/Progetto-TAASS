@@ -22,11 +22,11 @@ export class UsersComponent implements OnInit {
                }
 
   ngOnInit(): void {
-    /* this.apiService.getUsers(this.user.unique_id).subscribe(users => {
+    this.apiService.getUserList(this.user).subscribe(users => {
         this.users = users as User[];
     });
 
-    this.checkUserList(); */
+    // this.checkUserList();
   }
 
   newContact(): void {
@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit {
 
   checkUserList(): void {
     /* setInterval(() => {
-      this.apiService.getUsers(this.user.unique_id).subscribe(users => {
+      this.apiService.getUsers(this.user.uniqueId).subscribe(users => {
         this.users = users as User[];
     });
     }, 1000); */
@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
   }
 
   logout() {
-    /* this.apiService.logout(this.user.unique_id).subscribe();
-    this.router.navigate(['login']); */
+    this.apiService.logout(this.user).subscribe();
+    this.router.navigate(['login']);
   }
 }

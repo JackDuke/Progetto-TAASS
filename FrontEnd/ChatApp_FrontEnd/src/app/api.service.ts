@@ -9,21 +9,35 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+      'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, PATCH, OPTIONS',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      Authorization: 'authkey',
+      userid: '1',
+    }),
+  };
 
   baseUrl = 'http://localhost:8080/api/v1';
 
   constructor(private httpClient: HttpClient) {}
 
   login(user: User): Observable<Object> {
-    return this.httpClient.post(`${this.baseUrl}/login`, user);
+    return this.httpClient.post<User>(`${this.baseUrl}/login`, user);
+  }
+
+  logout(user: User): Observable<Object> {
+    return this.httpClient.post(`${this.baseUrl}/logout`, user);
   }
 
   getUser(id: number): Observable<Object> {
     return this.httpClient.get(`${this.baseUrl}/${id}`);
   }
 
-  getUserList(): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/users`);
+  getUserList(user: User): Observable<Object> {
+    return this.httpClient.post<User[]>(`${this.baseUrl}/users`, user);
   }
 
   /* login(email: string, password: string): Observable<Object> {
@@ -44,7 +58,7 @@ export class ApiService {
       );
   } */
 
-  logout(uniqueId: number) {
+  /* logout(uniqueId: number) {
     const postData = 'unique_id=' + uniqueId;
     return this.httpClient
       .post(`${this.baseUrl}/logout.php`, postData, {
@@ -54,10 +68,9 @@ export class ApiService {
       })
       .pipe(
       );
-  }
+  } */
 
-  getUsers(uniqueId: number) {
-    const postData = 'unique_id=' + uniqueId;
+  /* getUsers(user: User) {
     return this.httpClient
       .post<User[]>(`${this.baseUrl}/users.php`, postData, {
         headers: {
@@ -69,7 +82,7 @@ export class ApiService {
           return users;
         })
       );
-  }
+  } */
 
   getChat(uniqueId: number, incomingId: number) {
     const postData = 'unique_id=' + uniqueId + '&incoming_id=' + incomingId;

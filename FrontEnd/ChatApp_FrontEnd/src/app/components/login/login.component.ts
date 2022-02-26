@@ -14,7 +14,16 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   public showPassword: boolean | undefined;
-  user: any;
+  user: User = {
+    id: 0,
+    uniqueId: 0,
+    fname: '',
+    lname: '',
+    email: '',
+    password: '',
+    img: '',
+    status: '',
+  };
 
   constructor(private apiService: ApiService,
     private router: Router) { }
@@ -23,11 +32,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-   /*  this.apiService.login(this.user).subscribe(user => {
-      this.user = user;
-      // Cambio component ma mi porto dietro lo user
-      this.router.navigate(['/users'], {state: {user: this.user}});
-    }); */
-    this.apiService.login(this.user).subscribe((user) => this.user = user);
+    this.apiService.login(this.user).subscribe(user => {
+        // Cambio component ma mi porto dietro lo user
+        this.router.navigate(['/users'], {state: {user: user}});
+      });
   }
 }

@@ -9,10 +9,12 @@ import com.chatapp.springrest.ChatApp.model.User;
 import com.chatapp.springrest.ChatApp.repo.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +40,23 @@ public class UserController {
             .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
-    @GetMapping("/users")
-	public List<User> getAllCustomers() {
-		System.out.println("Get all Customers...");
+    @PostMapping(value = "/logout")
+	public ResponseEntity<String> logout(@RequestBody User user) {
+        
+        repository
+            .findById(user.getId())
+            .map(u -> {
+                u.setStatus("Offline");
+                return repository.save(u);
+            });
 
+        return new ResponseEntity<>("", HttpStatus.OK);
+	}
+
+    @PostMapping(value = "/users")
+    @Query()
+	public List<User> getAllUsers(@RequestBody User user) {
+        
 		List<User> users = new ArrayList<>();
 		repository.findAll().forEach(users::add);
 

@@ -33,7 +33,7 @@ export class ChatComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.apiService.getChat(this.user.unique_id, this.userToChat.unique_id).subscribe(messages => {
+    this.apiService.getChat(this.user.uniqueId, this.userToChat.uniqueId).subscribe(messages => {
       this.messages = messages as Message[];
     });
 
@@ -42,14 +42,14 @@ export class ChatComponent implements OnInit {
 
   checkNewMessages(): void {
     setInterval(() => {
-      this.apiService.getChat(this.user.unique_id, this.userToChat.unique_id).subscribe(messages => {
+      this.apiService.getChat(this.user.uniqueId, this.userToChat.uniqueId).subscribe(messages => {
       this.messages = messages as Message[];
     });
     }, 1000);
   }
 
   sendMessage(message: string) {
-    this.apiService.sendMessage(this.user.unique_id, this.userToChat.unique_id, message).subscribe();
+    this.apiService.sendMessage(this.user.uniqueId, this.userToChat.uniqueId, message).subscribe();
     this.message.msg = '';
     this.checkNewMessages();
   }
