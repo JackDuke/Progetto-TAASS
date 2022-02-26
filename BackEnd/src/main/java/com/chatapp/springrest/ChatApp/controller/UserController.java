@@ -9,6 +9,8 @@ import com.chatapp.springrest.ChatApp.model.User;
 import com.chatapp.springrest.ChatApp.repo.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,20 +27,15 @@ public class UserController {
 	UserRepository repository;
 
     @PostMapping(value = "/login")
-	public Optional<User> login(@RequestBody User user) {
-
-		// User _user = repository.login(user);
-        
-        Optional<User> userData = repository.findById(user.getId());
-        System.out.println("user.getId: " + user.getId());
-
-        /* if (userData.isPresent()) {
-            User userLogged = userData.get();
-            userLogged.setStatus("Online");
-            repository.save(user);
-            return userLogged;
-        } */
-        return userData;
+	public ResponseEntity<User> login(@RequestBody User user) {
+        return repository
+            .findByEmailAndPassword(user.getEmail(), user.getPassword())
+            .map(u -> {
+                u.setStatus("Online");
+                return repository.save(u);
+            })
+            .map(u -> ResponseEntity.ok(u))
+            .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
     @GetMapping("/users")
