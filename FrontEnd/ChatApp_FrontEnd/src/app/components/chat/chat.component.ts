@@ -18,10 +18,10 @@ export class ChatComponent implements OnInit {
   userToChat!: User;
   messages!: Message[];
   message: Message = {
-    msg_id: 0,
-    incoming_msg_id: 0,
-    outgoing_msg_id: 0,
-    msg: '',
+    id: 0,
+    idDestinatario: '',
+    idMittente: '',
+    msgText: '',
   };
   hoverMessage: any;
 
@@ -33,27 +33,30 @@ export class ChatComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.message.idDestinatario = this.userToChat.uniqueId;
+    this.message.idMittente = this.user.uniqueId;
     this.apiService.getChat(this.user.uniqueId, this.userToChat.uniqueId).subscribe(messages => {
       this.messages = messages as Message[];
+      console.log(messages);
     });
 
-    // this.checkNewMessages();
+    this.checkNewMessages();
   }
 
   checkNewMessages(): void {
-    /* setInterval(() => {
+    setInterval(() => {
       this.apiService.getChat(this.user.uniqueId, this.userToChat.uniqueId).subscribe(messages => {
       this.messages = messages as Message[];
     });
-    }, 1000); */
+    }, 1000);
   }
 
-  sendMessage(message: string) {
-    // this.apiService.sendMessage(this.user.uniqueId, this.userToChat.uniqueId, message).subscribe();
-    // this.message.msg = '';
-    // this.checkNewMessages();
+  sendMessage(message: Message) {
+    console.log('message: ' + JSON.stringify(message));
+    this.apiService.sendMessage(message).subscribe();
+    this.message.msgText = '';
+    this.checkNewMessages();
   }
-
 
   deleteMessage(message: any) {
     // this.apiService.deleteMessage(message.msg_id).subscribe();

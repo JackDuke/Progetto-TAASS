@@ -28,8 +28,7 @@ public class Message {
 
     }
 
-    public Message(Long id, String idDestinatario, String idMittente, String msgText) {
-        this.id = id;
+    public Message(String idDestinatario, String idMittente, String msgText) {
         this.idDestinatario = idDestinatario;
         this.idMittente = idMittente;
         this.msgText = msgText;

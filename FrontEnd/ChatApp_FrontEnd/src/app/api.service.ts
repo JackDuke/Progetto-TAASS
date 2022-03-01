@@ -40,11 +40,11 @@ export class ApiService {
     return this.httpClient.post<User[]>(`${this.baseUrl}/users`, uniqueId);
   }
 
-  getChat(uniqueId: string, incomingId: string) {
+  getChat(uniqueId: string, incomingId: string): Observable<Object> {
     return this.httpClient.post<Message[]>(`${this.baseUrl}/chat`, { uniqueId, incomingId });
   }
 
-  insertNewContact(uniqueId: string, fname: string, lname: string, email: string, password: string, img: string, status: string) {
+  /* insertNewContact(uniqueId: string, fname: string, lname: string, email: string, password: string, img: string, status: string) {
     const postData = 'unique_id=' + uniqueId + '&fname=' + fname + '&lname=' + lname + '&email=' + email + '&password=' + password + '&img=' + img + '&status=' + status;
     return this.httpClient
       .post<User>(`${this.baseUrl}/insert-contact.php`, postData, {
@@ -57,21 +57,10 @@ export class ApiService {
           return user;
         })
       );
-  }
+  } */
 
-  sendMessage(uniqueId: string, incomingId: string, msg: string) {
-    const postData = 'unique_id=' + uniqueId + '&incoming_id=' + incomingId + '&message=' + msg;
-    return this.httpClient
-      .post<Message>(`${this.baseUrl}/insert-chat.php`, postData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-      })
-      .pipe(
-        map((message) => {
-          return message;
-        })
-      );
+  sendMessage(message: Message): Observable<Object> {
+    return this.httpClient.post<Message>(`${this.baseUrl}/send`, message);
   }
 
   deleteMessage(msgId: number) {

@@ -20,26 +20,26 @@
       </header>
         <div id="chatDiv" class="chat-box">
           <div *ngFor="let message of this.messages">
-          <div class="chat " [ngClass]="(message.outgoing_msg_id.toString() === this.user.uniqueId) ? 'outgoing' : 'incoming'">
+          <div class="chat " [ngClass]="(message.idMittente === this.user.uniqueId) ? 'outgoing' : 'incoming'">
             <div class="details" (mouseover)='hoverMessage = message' (mouseleave)='hoverMessage = null'>
               <div class="msg">
-                <p *ngIf="message.outgoing_msg_id.toString() === this.user.uniqueId; else incoming">{{message.msg}}
+                <p *ngIf="message.idMittente === this.user.uniqueId; else incoming">{{message.msgText}}
                   <i [ngClass]="hoverMessage === message ? 'show-icon' : 'hide-icon'" (click)="deleteMessage(message)" class="fas fa-trash-alt"></i>
                 </p>
               </div>
               <ng-template #incoming>
                 <div class="msg">
-                  <p *ngIf="message.outgoing_msg_id.toString() !== this.user.uniqueId" class="msg">{{message.msg}}</p>
+                  <p *ngIf="message.idMittente !== this.user.uniqueId" class="msg">{{message.msgText}}</p>
                 </div>
               </ng-template>
           </div>
           </div>
         </div>
       </div>
-      <form action="#" class="typing-area" (ngSubmit)="sendMessage(this.message.msg)">
+      <form action="#" class="typing-area" (ngSubmit)="sendMessage(this.message)">
         <input type="text" class="incoming_id" name="incoming_id" value="" hidden>
-        <input [(ngModel)]="this.message.msg" #msg="ngModel" type="text" name="message" class="input-field" placeholder="Scrivi il messaggio..." autocomplete="off">
-        <button [disabled]="message === null" [ngClass]="(this.message.msg === '' || this.message === null) ? '' : 'active'" type="submit"><i class="fab fa-telegram-plane"></i></button>
+        <input [(ngModel)]="this.message.msgText" #msg="ngModel" type="text" name="message" class="input-field" placeholder="Scrivi il messaggio..." autocomplete="off">
+        <button [disabled]="message === null" [ngClass]="(this.message.msgText === '' || this.message === null) ? '' : 'active'" type="submit"><i class="fab fa-telegram-plane"></i></button>
       </form>
     </section>
   </div>
