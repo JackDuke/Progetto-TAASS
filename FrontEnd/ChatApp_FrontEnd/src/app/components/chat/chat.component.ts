@@ -37,27 +37,27 @@ export class ChatComponent implements OnInit {
       this.messages = messages as Message[];
     });
 
-    this.checkNewMessages();
+    // this.checkNewMessages();
   }
 
   checkNewMessages(): void {
-    setInterval(() => {
+    /* setInterval(() => {
       this.apiService.getChat(this.user.uniqueId, this.userToChat.uniqueId).subscribe(messages => {
       this.messages = messages as Message[];
     });
-    }, 1000);
+    }, 1000); */
   }
 
   sendMessage(message: string) {
-    this.apiService.sendMessage(this.user.uniqueId, this.userToChat.uniqueId, message).subscribe();
-    this.message.msg = '';
-    this.checkNewMessages();
+    // this.apiService.sendMessage(this.user.uniqueId, this.userToChat.uniqueId, message).subscribe();
+    // this.message.msg = '';
+    // this.checkNewMessages();
   }
 
 
   deleteMessage(message: any) {
-    this.apiService.deleteMessage(message.msg_id).subscribe();
-    this.checkNewMessages();
+    // this.apiService.deleteMessage(message.msg_id).subscribe();
+    // this.checkNewMessages();
   }
 
   goBack() {

@@ -13,7 +13,7 @@ public class User {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
     @Column(name = "unique_id")
 	private String uniqueId;
@@ -50,11 +50,11 @@ public class User {
         this.status = status;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

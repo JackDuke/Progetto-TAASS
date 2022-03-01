@@ -22,11 +22,12 @@ export class UsersComponent implements OnInit {
                }
 
   ngOnInit(): void {
-    this.apiService.getUserList(this.user).subscribe(users => {
+    this.apiService.getUserList(this.user.uniqueId).subscribe(users => {
         this.users = users as User[];
+        console.log(users)
     });
 
-    // this.checkUserList();
+    this.checkUserList();
   }
 
   newContact(): void {
@@ -34,15 +35,15 @@ export class UsersComponent implements OnInit {
   }
 
   checkUserList(): void {
-    /* setInterval(() => {
-      this.apiService.getUsers(this.user.uniqueId).subscribe(users => {
+    setInterval(() => {
+      this.apiService.getUserList(this.user.uniqueId).subscribe(users => {
         this.users = users as User[];
     });
-    }, 1000); */
+    }, 1000);
   }
 
   goToChat(userToChat: User) {
-    /* this.router.navigate(['chat'], {state: { example: userToChat, user: this.user}}); */
+    this.router.navigate(['chat'], {state: { example: userToChat, user: this.user}});
   }
 
   logout() {

@@ -13,7 +13,7 @@ public class Message {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
     @Column(name = "id_destinatario")
 	private String idDestinatario;
@@ -28,18 +28,18 @@ public class Message {
 
     }
 
-    public Message(long id, String idDestinatario, String idMittente, String msgText) {
+    public Message(Long id, String idDestinatario, String idMittente, String msgText) {
         this.id = id;
         this.idDestinatario = idDestinatario;
         this.idMittente = idMittente;
         this.msgText = msgText;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

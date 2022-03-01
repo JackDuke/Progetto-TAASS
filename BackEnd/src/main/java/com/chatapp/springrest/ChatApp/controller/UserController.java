@@ -8,8 +8,11 @@ import java.util.Optional;
 import com.chatapp.springrest.ChatApp.model.User;
 import com.chatapp.springrest.ChatApp.repo.UserRepository;
 
+import org.hibernate.loader.entity.UniqueEntityLoader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,12 +57,17 @@ public class UserController {
 	}
 
     @PostMapping(value = "/users")
-    @Query()
-	public List<User> getAllUsers(@RequestBody User user) {
+	public List<User> getUsers(@RequestBody String uniqueId) {
         
-		List<User> users = new ArrayList<>();
-		repository.findAll().forEach(users::add);
-
+		List<User> users = repository.findByUniqueId(Sort.by("fname"), uniqueId);
 		return users;
+	}
+
+    @GetMapping(value = "/users/{id}")
+	public Optional<User> getUser(@PathVariable long id) {
+        
+		Optional<User> user = repository.findById(id);
+
+		return user;
 	}
 }

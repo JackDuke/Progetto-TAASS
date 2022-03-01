@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public showPassword: boolean | undefined;
   user: User = {
     id: 0,
-    uniqueId: 0,
+    uniqueId: '',
     fname: '',
     lname: '',
     email: '',

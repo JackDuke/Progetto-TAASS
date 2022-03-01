@@ -20,16 +20,16 @@
       </header>
         <div id="chatDiv" class="chat-box">
           <div *ngFor="let message of this.messages">
-          <div class="chat " [ngClass]="(message.outgoing_msg_id === this.user.uniqueId) ? 'outgoing' : 'incoming'">
+          <div class="chat " [ngClass]="(message.outgoing_msg_id.toString() === this.user.uniqueId) ? 'outgoing' : 'incoming'">
             <div class="details" (mouseover)='hoverMessage = message' (mouseleave)='hoverMessage = null'>
               <div class="msg">
-                <p *ngIf="message.outgoing_msg_id === this.user.uniqueId; else incoming">{{message.msg}}
+                <p *ngIf="message.outgoing_msg_id.toString() === this.user.uniqueId; else incoming">{{message.msg}}
                   <i [ngClass]="hoverMessage === message ? 'show-icon' : 'hide-icon'" (click)="deleteMessage(message)" class="fas fa-trash-alt"></i>
                 </p>
               </div>
               <ng-template #incoming>
                 <div class="msg">
-                  <p *ngIf="message.outgoing_msg_id !== this.user.uniqueId" class="msg">{{message.msg}}</p>
+                  <p *ngIf="message.outgoing_msg_id.toString() !== this.user.uniqueId" class="msg">{{message.msg}}</p>
                 </div>
               </ng-template>
           </div>
