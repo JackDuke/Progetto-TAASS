@@ -44,27 +44,12 @@ export class ApiService {
     return this.httpClient.post<Message[]>(`${this.baseUrl}/chat`, { uniqueId, incomingId });
   }
 
-  /* insertNewContact(uniqueId: string, fname: string, lname: string, email: string, password: string, img: string, status: string) {
-    const postData = 'unique_id=' + uniqueId + '&fname=' + fname + '&lname=' + lname + '&email=' + email + '&password=' + password + '&img=' + img + '&status=' + status;
-    return this.httpClient
-      .post<User>(`${this.baseUrl}/insert-contact.php`, postData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-      })
-      .pipe(
-        map((user) => {
-          return user;
-        })
-      );
-  } */
-
   sendMessage(message: Message): Observable<Object> {
     return this.httpClient.post<Message>(`${this.baseUrl}/send`, message);
   }
 
   deleteMessage(msgId: number) {
-    return this.httpClient.delete(`${this.baseUrl}/delete-message.php?msg_id=${msgId}`);
+    return this.httpClient.delete(`${this.baseUrl}/delete/${msgId}`, { responseType: 'text' });
   }
 
 }

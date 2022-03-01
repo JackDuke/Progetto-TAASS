@@ -16,8 +16,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +57,14 @@ public class MessageController {
 		System.out.println("Messaggio inviato con successo!");
 		return _message;
 
+	}
+
+	@DeleteMapping(value = "/delete/{id}")
+	public ResponseEntity<String> deleteMessage(@PathVariable("id") long id) {
+		System.out.println("Delete Message with ID = " + id + "...");
+
+		repository.deleteById(id);
+
+		return new ResponseEntity<>("Message has been deleted!", HttpStatus.OK);
 	}
 }

@@ -58,9 +58,9 @@ export class ChatComponent implements OnInit {
     this.checkNewMessages();
   }
 
-  deleteMessage(message: any) {
-    // this.apiService.deleteMessage(message.msg_id).subscribe();
-    // this.checkNewMessages();
+  deleteMessage(message: Message) {
+    this.apiService.deleteMessage(message.id).subscribe();
+    this.checkNewMessages();
   }
 
   goBack() {
