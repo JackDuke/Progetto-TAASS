@@ -25,11 +25,17 @@
               <div class="msg">
                 <p *ngIf="message.idMittente === this.user.uniqueId; else incoming">{{message.msgText}}
                   <i [ngClass]="hoverMessage === message ? 'show-icon' : 'hide-icon'" (click)="deleteMessage(message)" class="fas fa-trash-alt"></i>
+                  <i [ngClass]="hoverMessage === message ? 'show-icon-right' : 'hide-icon'" (click)="editMessage(message)" class="fas fa-edit"></i>
                 </p>
               </div>
               <ng-template #incoming>
-                <div class="msg">
-                  <p *ngIf="message.idMittente !== this.user.uniqueId" class="msg">{{message.msgText}}</p>
+                <div class="d-inline">
+                  <div class="content">
+                    <img src="./../../assets/images/{{this.userToChat.img}}" alt="">
+                  </div>
+                  <div class="msg">
+                    <p *ngIf="message.idMittente !== this.user.uniqueId" class="msg">{{message.msgText}}</p>
+                  </div>
                 </div>
               </ng-template>
           </div>
@@ -38,7 +44,10 @@
       </div>
       <form action="#" class="typing-area" (ngSubmit)="sendMessage(this.message)">
         <input type="text" class="incoming_id" name="incoming_id" value="" hidden>
-        <input [(ngModel)]="this.message.msgText" #msg="ngModel" type="text" name="message" class="input-field" placeholder="Scrivi il messaggio..." autocomplete="off">
+        <input *ngIf="this.EDIT_MODE === false; else editInput" [(ngModel)]="this.message.msgText" #msg="ngModel" type="text" name="message" class="input-field" placeholder="Scrivi il messaggio..." autocomplete="off">
+        <ng-template #editInput>
+          <input id="text" [(ngModel)]="this.message.msgText" value="message.msgText" #msg="ngModel" type="text" name="message" class="input-field" placeholder="Scrivi il messaggio..." autocomplete="off">
+        </ng-template>
         <button [disabled]="message === null" [ngClass]="(this.message.msgText === '' || this.message === null) ? '' : 'active'" type="submit"><i class="fab fa-telegram-plane"></i></button>
       </form>
     </section>

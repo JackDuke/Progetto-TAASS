@@ -52,4 +52,9 @@ export class ApiService {
     return this.httpClient.delete(`${this.baseUrl}/delete/${msgId}`, { responseType: 'text' });
   }
 
+  editMessage(msgId: number, message: Message) {
+    console.log(msgId);
+    return this.httpClient.put(`${this.baseUrl}/update/${msgId}`, message, { responseType: 'text' });
+  }
+
 }

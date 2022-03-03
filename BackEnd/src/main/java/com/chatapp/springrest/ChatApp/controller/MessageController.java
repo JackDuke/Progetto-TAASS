@@ -4,6 +4,7 @@ package com.chatapp.springrest.ChatApp.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +46,7 @@ public class MessageController {
 	public List<Message> getChat(@RequestBody ObjectNode json) {
 		String uniqueId = json.get("uniqueId").asText();
    		String incomingId = json.get("incomingId").asText();
-		System.out.println(json);
+		// System.out.println(json);
 		List<Message> messages = repository.findByUniqueIdAndIncomingId(Sort.by("id"), uniqueId, incomingId);
 		return messages;
 	}
@@ -66,5 +68,21 @@ public class MessageController {
 		repository.deleteById(id);
 
 		return new ResponseEntity<>("Message has been deleted!", HttpStatus.OK);
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Message> updateMessage(@PathVariable("id") long id, @RequestBody Message message) {
+		System.out.println("Update Message with ID = " + id + "...");
+
+		Optional<Message> messageData = repository.findById(id);
+		System.out.println(messageData);
+
+		if (messageData.isPresent()) {
+			Message _message = messageData.get();
+			_message.setMsgText(message.getMsgText());
+			return new ResponseEntity<>(repository.save(_message), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }

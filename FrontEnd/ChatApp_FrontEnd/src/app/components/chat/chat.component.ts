@@ -24,6 +24,7 @@ export class ChatComponent implements OnInit {
     msgText: '',
   };
   hoverMessage: any;
+  EDIT_MODE!: boolean;
 
 
   constructor(private apiService: ApiService,
@@ -37,10 +38,9 @@ export class ChatComponent implements OnInit {
     this.message.idMittente = this.user.uniqueId;
     this.apiService.getChat(this.user.uniqueId, this.userToChat.uniqueId).subscribe(messages => {
       this.messages = messages as Message[];
-      console.log(messages);
     });
 
-    this.checkNewMessages();
+    // this.checkNewMessages();
   }
 
   checkNewMessages(): void {
@@ -52,15 +52,33 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(message: Message) {
-    console.log('message: ' + JSON.stringify(message));
+    if (this.EDIT_MODE) {
+      this.apiService.editMessage(message.id, message).subscribe(x => console.log(x));
+      this.message.msgText = '';
+      this.EDIT_MODE = false;
+    } else {
     this.apiService.sendMessage(message).subscribe();
     this.message.msgText = '';
+    }
     this.checkNewMessages();
   }
 
   deleteMessage(message: Message) {
     this.apiService.deleteMessage(message.id).subscribe();
     this.checkNewMessages();
+  }
+
+  editMessage(message: Message) {
+    this.EDIT_MODE = true;
+    console.log(this.EDIT_MODE);
+    // console.log(message.msgText);
+    this.message = message;
+    const inputField = document.getElementById("text") as HTMLElement;
+    document.getElementById("text")!.focus();
+    inputField.innerText = message.msgText;
+    this.message.msgText = message.msgText;
+
+    //this.apiService.editMessage(message.id).subscribe();
   }
 
   goBack() {

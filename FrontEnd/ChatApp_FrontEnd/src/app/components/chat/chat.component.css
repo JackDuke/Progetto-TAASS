@@ -17,6 +17,20 @@ i.show-icon {
   visibility: visible;
 }
 
+i.show-icon-right {
+  visibility: visible;
+  padding-left: 0.5rem;
+}
+
 i.hide-icon {
   visibility: hidden;
+}
+
+.content {
+  float: left;
+}
+
+.msg {
+  margin-left: 0.2rem;
+  float: right;
 }
